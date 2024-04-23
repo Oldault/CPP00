@@ -20,7 +20,8 @@ class	PhoneBook {
 
 		static const int MAX_CONTACTS = 8;
 		Contact contacts[8];
-		int	_contactAmount;
+		int	_totalContacts;
+		int	_contactNum;
 
 		bool getUserInput(const std::string& prompt, std::string& out);
 };

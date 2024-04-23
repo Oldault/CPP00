@@ -3,7 +3,7 @@
 #include <iostream>
 #include <iomanip>
 
-PhoneBook::PhoneBook( void ) : _contactAmount(0) {
+PhoneBook::PhoneBook( void ) :  _totalContacts(0), _contactNum(0) {
 	std::cout << "Phone Book is being created" << std::endl;
 }
 
@@ -26,8 +26,8 @@ bool PhoneBook::getUserInput(const std::string& prompt, std::string& out) {
 }
 
 bool	PhoneBook::add ( void ) {
-	if (_contactAmount >= MAX_CONTACTS) {
-		_contactAmount = 0;
+	if (_contactNum >= MAX_CONTACTS) {
+		_contactNum = 0;
 	}
 
 	const char* prompts[] = {"First Name: ", "Last Name: ", "Nickname: ", "Phone Number: ", "Darkest Secret: "};
@@ -38,15 +38,16 @@ bool	PhoneBook::add ( void ) {
 			continue;
 		}
 		switch (i) {
-			case 0: contacts[_contactAmount].setFirstName(input); break; 
-			case 1: contacts[_contactAmount].setLastName(input); break; 
-			case 2: contacts[_contactAmount].setNickname(input); break; 
-			case 3: contacts[_contactAmount].setPhoneNumber(input); break; 
-			case 4: contacts[_contactAmount].setSecret(input); break; 
+			case 0: contacts[_contactNum].setFirstName(input); break; 
+			case 1: contacts[_contactNum].setLastName(input); break; 
+			case 2: contacts[_contactNum].setNickname(input); break; 
+			case 3: contacts[_contactNum].setPhoneNumber(input); break; 
+			case 4: contacts[_contactNum].setSecret(input); break; 
 		}
 	}
 
-	_contactAmount++;
+	_contactNum++;
+	_totalContacts++;
 	return true;
 }
 
@@ -55,13 +56,13 @@ void	PhoneBook::search( void ) const {
 	std::cout << ITAL(BOLD(BBLU("|Indexes   "))) << ITAL(BOLD(BGRN("|FirstName |LastName  |Nickname  |"))) << std::endl;
 	std::cout << BBLU("+----------") << BGRN("+----------+----------+----------+") << std::endl;
 
-	if (_contactAmount == 0) {
+	if (_contactNum == 0) {
 		std::cout << "|                                           |" << std::endl;
 		std::cout << "| No one is here... Only you, and space...  |" << std::endl;
 		std::cout << "|                                           |" << std::endl;
 	}
 
-	for (int i = 0; i < _contactAmount ; i++) {
+	for (int i = 0; i < _totalContacts && i < MAX_CONTACTS ; i++) {
 		std::string firstName = contacts[i].getFirstName();
 		std::string lastName = contacts[i].getLastName();
 		std::string nickname = contacts[i].getNickname();
