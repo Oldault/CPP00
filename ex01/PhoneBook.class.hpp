@@ -4,6 +4,8 @@
 #include "Contact.class.hpp"
 #include <string>
 
+#define MAX_ITER 1000
+
 class	PhoneBook {
 	
 	public:
@@ -11,13 +13,16 @@ class	PhoneBook {
 		PhoneBook( void );
 		~PhoneBook( void );
 
-		bool	add(const std::string& firstName, const std::string& lastName, const std::string& nickname, const std::string& phoneNumber, const std::string& darkestSecret);
-		void	search( void );
+		bool	add( void );
+		void	search( void ) const;
 
 	private:
 
-		int		_contactAmount;
+		static const int MAX_CONTACTS = 8;
 		Contact contacts[8];
+		int	_contactAmount;
+
+		bool getUserInput(const std::string& prompt, std::string& out);
 };
 
 #endif

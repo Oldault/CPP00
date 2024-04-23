@@ -4,22 +4,24 @@
 int main( void ) {
 
 	PhoneBook phoneBook;
+	std::string input;
 
-	phoneBook.add("Geroge", "Colormojar", "Gerogie", "9019231", "likes frogs");
-	phoneBook.add("Saint", "Main", "Holo", "42", "hates frogs");
-	phoneBook.add("", "", "", "21", "");
-	phoneBook.add("Pierre", "Rock", "Onix", "360720", "butterman");
-	phoneBook.add("Moinamaoulida", "Capabinsogaroll", "bob", "3", "a");
+	// phoneBook.add("Geroge", "Colormojar", "Gerogie", "9019231", "likes frogs");
+	// phoneBook.add("Saint", "Main", "Holo", "42", "hates frogs");
+	// phoneBook.add("", "", "", "21", "");
+	// phoneBook.add("Pierre", "Rock", "Onix", "360720", "butterman");
+	// phoneBook.add("Moinamaoulida", "Capabinsogaroll", "bob", "3", "a");
 
-	while (42) {
+	uint16_t i = 0;
+	while (42 && i++ < MAX_ITER) {
 		if (std::cin.eof()) {
-			return 1;
+			break ;
 		}
-		std::string input;
 		std::cout << "[📞] > ";
 		std::getline(std::cin, input);
 		if (input == "ADD") {
 			std::cout << "Adding Contact..." << std::endl;
+			phoneBook.add();
 		}
 		else if (input == "SEARCH") {
 			std::cout << "Searching for Contacts" << std::endl;

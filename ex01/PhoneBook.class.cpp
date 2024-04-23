@@ -11,28 +11,46 @@ PhoneBook::~PhoneBook ( void ) {
 	std::cout << "Phone Book is being deleted" << std::endl;
 }
 
-bool	PhoneBook::add (const std::string& firstName, const std::string& lastName, const std::string& nickname, const std::string& phoneNumber, const std::string& darkestSecret) {
-	
-	if (firstName.empty() || lastName.empty() || nickname.empty() || phoneNumber.empty() ||darkestSecret.empty()) {
-		std::cerr << "Empty field in assignment was detected 🗃️" << std::endl;
+bool PhoneBook::getUserInput(const std::string& prompt, std::string& out) {
+	if (std::cin.eof()) {
+		std::cerr << "Could not complete adding a contact" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	std::cout << prompt;
+	std::getline(std::cin, out);
+	if (out.empty()) {
+		std::cerr << "Input required, please try again." << std::endl;
 		return false;
 	}
-	if (_contactAmount >= 8) {
-		_contactAmount = 0;
-	}
-
-	contacts[_contactAmount].setFirstName(firstName);
-	contacts[_contactAmount].setLastName(lastName);
-	contacts[_contactAmount].setNickname(nickname);
-	contacts[_contactAmount].setPhoneNumber(phoneNumber);
-	contacts[_contactAmount].setSecret(darkestSecret);
-
-	_contactAmount++;
-
 	return true;
 }
 
-void	PhoneBook::search( void ) {
+bool	PhoneBook::add ( void ) {
+	if (_contactAmount >= MAX_CONTACTS) {
+		_contactAmount = 0;
+	}
+
+	const char* prompts[] = {"First Name: ", "Last Name: ", "Nickname: ", "Phone Number: ", "Darkest Secret: "};
+	std::string	input;
+
+	for (int i = 0; i < 5; i++) {
+		while (!getUserInput(prompts[i], input)) {
+			continue;
+		}
+		switch (i) {
+			case 0: contacts[_contactAmount].setFirstName(input); break; 
+			case 1: contacts[_contactAmount].setLastName(input); break; 
+			case 2: contacts[_contactAmount].setNickname(input); break; 
+			case 3: contacts[_contactAmount].setPhoneNumber(input); break; 
+			case 4: contacts[_contactAmount].setSecret(input); break; 
+		}
+	}
+
+	_contactAmount++;
+	return true;
+}
+
+void	PhoneBook::search( void ) const {
 	std::cout << BBLU("+----------") << BGRN("---------------------------------+") << std::endl;
 	std::cout << ITAL(BOLD(BBLU("|Indexes   "))) << ITAL(BOLD(BGRN("|FirstName |LastName  |Nickname  |"))) << std::endl;
 	std::cout << BBLU("+----------") << BGRN("+----------+----------+----------+") << std::endl;
