@@ -36,6 +36,13 @@ void	PhoneBook::search( void ) {
 	std::cout << BBLU("+----------") << BGRN("---------------------------------+") << std::endl;
 	std::cout << ITAL(BOLD(BBLU("|Indexes   "))) << ITAL(BOLD(BGRN("|FirstName |LastName  |Nickname  |"))) << std::endl;
 	std::cout << BBLU("+----------") << BGRN("+----------+----------+----------+") << std::endl;
+
+	if (_contactAmount == 0) {
+		std::cout << "|                                           |" << std::endl;
+		std::cout << "| No one is here... Only you, and space...  |" << std::endl;
+		std::cout << "|                                           |" << std::endl;
+	}
+
 	for (int i = 0; i < _contactAmount ; i++) {
 		std::string firstName = contacts[i].getFirstName();
 		std::string lastName = contacts[i].getLastName();
