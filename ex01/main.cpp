@@ -6,12 +6,6 @@ int main( void ) {
 	PhoneBook phoneBook;
 	std::string input;
 
-	// phoneBook.add("Geroge", "Colormojar", "Gerogie", "9019231", "likes frogs");
-	// phoneBook.add("Saint", "Main", "Holo", "42", "hates frogs");
-	// phoneBook.add("", "", "", "21", "");
-	// phoneBook.add("Pierre", "Rock", "Onix", "360720", "butterman");
-	// phoneBook.add("Moinamaoulida", "Capabinsogaroll", "bob", "3", "a");
-
 	uint16_t i = 0;
 	while (42 && i++ < MAX_ITER) {
 		if (std::cin.eof()) {

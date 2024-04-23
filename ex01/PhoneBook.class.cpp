@@ -2,6 +2,7 @@
 #include "Colors.h"
 #include <iostream>
 #include <iomanip>
+#include <sstream>
 
 PhoneBook::PhoneBook( void ) :  _totalContacts(0), _contactNum(0) {
 	std::cout << "Phone Book is being created" << std::endl;
@@ -51,7 +52,36 @@ bool	PhoneBook::add ( void ) {
 	return true;
 }
 
-void	PhoneBook::search( void ) const {
+unsigned int stringToUnsignedInt(const std::string& str) {
+    std::istringstream iss(str);
+    unsigned int number;
+    if (!(iss >> number)) {
+        std::cerr << "Conversion failed!" << std::endl;
+        return -1;
+    }
+    return number;
+}
+
+bool PhoneBook::getUserIndex(std::string& input) {
+	if (std::cin.eof()) {
+		std::cerr << "Could not complete fetching contact" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	std::cout << "Index of the entry to display: ";
+	std::getline(std::cin, input);
+	if (input.empty()) {
+		std::cerr << "Input required, please try again." << std::endl;
+		return false;
+	}
+	uint16_t result = stringToUnsignedInt(input);
+	if (result < 1 || result > _totalContacts) {
+		std::cerr << "No contact at such index. Please try again" << std::endl;
+		return false;
+	}
+	return true;
+}
+
+void	PhoneBook::search( void ) {
 	std::cout << BBLU("+----------") << BGRN("---------------------------------+") << std::endl;
 	std::cout << ITAL(BOLD(BBLU("|Indexes   "))) << ITAL(BOLD(BGRN("|FirstName |LastName  |Nickname  |"))) << std::endl;
 	std::cout << BBLU("+----------") << BGRN("+----------+----------+----------+") << std::endl;
@@ -73,13 +103,25 @@ void	PhoneBook::search( void ) const {
 
 		std::cout << "|" << std::setfill (' ') << std::setw (14);
 		std::cout << KMAG << "\x1B[1m" << (i + 1) << RST << "|";
-		std::cout << std::setfill (' ') << std::setw (10);
-		std::cout << firstName << "|";
-		std::cout << std::setfill (' ') << std::setw (10);
-		std::cout << lastName << "|";
-		std::cout << std::setfill (' ') << std::setw (10);
-		std::cout << nickname << "|";
-		std::cout << std::endl;
+		for (int j = 0; j < 3 ; j++) {
+			std::cout << std::setfill (' ') << std::setw (10);
+			switch (j) {
+				case 0: std::cout << firstName << "|"; break;
+				case 1: std::cout << lastName << "|"; break;
+				case 2: std::cout << nickname << "|" << std::endl; break;
+			}
+		}
 	}
 	std::cout << "+-------------------------------------------+" << std::endl;
+
+	std::string	input;
+	while (!getUserIndex(input)) {
+		continue;
+	}
+	uint16_t index = (stringToUnsignedInt(input) - 1);
+	std::cout << "First name: " << contacts[index].getFirstName() << std::endl;
+	std::cout << "Last name: " << contacts[index].getLastName() << std::endl;
+	std::cout << "Nickname: " << contacts[index].getNickname() << std::endl;
+	std::cout << "Phone Number: " << contacts[index].getPhoneNumber() << std::endl;
+	std::cout << "Darkest Secret: " << contacts[index].getSecret() << std::endl;
 }

@@ -14,7 +14,7 @@ class	PhoneBook {
 		~PhoneBook( void );
 
 		bool	add( void );
-		void	search( void ) const;
+		void	search( void );
 
 	private:
 
@@ -24,6 +24,7 @@ class	PhoneBook {
 		int	_contactNum;
 
 		bool getUserInput(const std::string& prompt, std::string& out);
+		bool getUserIndex(std::string& input);
 };
 
 #endif
