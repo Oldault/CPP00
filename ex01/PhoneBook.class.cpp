@@ -1,6 +1,7 @@
+#include "PhoneBook.class.hpp"
+#include "Colors.h"
 #include <iostream>
 #include <iomanip>
-#include "PhoneBook.class.hpp"
 
 PhoneBook::PhoneBook( void ) : _contactAmount(0) {
 	std::cout << "Phone Book is being created" << std::endl;
@@ -32,7 +33,9 @@ bool	PhoneBook::add (const std::string& firstName, const std::string& lastName, 
 }
 
 void	PhoneBook::search( void ) {
-	std::cout << "+-------------------------------------------+" << std::endl;
+	std::cout << BBLU("+----------") << BGRN("---------------------------------+") << std::endl;
+	std::cout << ITAL(BOLD(BBLU("|Indexes   "))) << ITAL(BOLD(BGRN("|FirstName |LastName  |Nickname  |"))) << std::endl;
+	std::cout << BBLU("+----------") << BGRN("+----------+----------+----------+") << std::endl;
 	for (int i = 0; i < _contactAmount ; i++) {
 		std::string firstName = contacts[i].getFirstName();
 		std::string lastName = contacts[i].getLastName();
@@ -42,8 +45,8 @@ void	PhoneBook::search( void ) {
 		lastName = lastName.size() > 10 ? lastName.substr(0, 9) + '.' : lastName;
 		nickname = nickname.size() > 10 ? nickname.substr(0, 9) + '.' : nickname;
 
-		std::cout << "|" << std::setfill (' ') << std::setw (10);
-		std::cout << (i + 1) << "|";
+		std::cout << "|" << std::setfill (' ') << std::setw (14);
+		std::cout << KMAG << "\x1B[1m" << (i + 1) << RST << "|";
 		std::cout << std::setfill (' ') << std::setw (10);
 		std::cout << firstName << "|";
 		std::cout << std::setfill (' ') << std::setw (10);
