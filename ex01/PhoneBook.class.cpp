@@ -34,14 +34,22 @@ bool	PhoneBook::add (const std::string& firstName, const std::string& lastName, 
 void	PhoneBook::search( void ) {
 	std::cout << "+-------------------------------------------+" << std::endl;
 	for (int i = 0; i < _contactAmount ; i++) {
+		std::string firstName = contacts[i].getFirstName();
+		std::string lastName = contacts[i].getLastName();
+		std::string nickname = contacts[i].getNickname();
+
+		firstName = firstName.size() > 10 ? firstName.substr(0, 9) + '.' : firstName;
+		lastName = lastName.size() > 10 ? lastName.substr(0, 9) + '.' : lastName;
+		nickname = nickname.size() > 10 ? nickname.substr(0, 9) + '.' : nickname;
+
 		std::cout << "|" << std::setfill (' ') << std::setw (10);
 		std::cout << (i + 1) << "|";
 		std::cout << std::setfill (' ') << std::setw (10);
-		std::cout << contacts[i].getFirstName() << "|";
+		std::cout << firstName << "|";
 		std::cout << std::setfill (' ') << std::setw (10);
-		std::cout << contacts[i].getLastName() << "|";
+		std::cout << lastName << "|";
 		std::cout << std::setfill (' ') << std::setw (10);
-		std::cout << contacts[i].getNickname() << "|";
+		std::cout << nickname << "|";
 		std::cout << std::endl;
 	}
 	std::cout << "+-------------------------------------------+" << std::endl;
