@@ -17,7 +17,7 @@ bool PhoneBook::getUserInput(const std::string& prompt, std::string& out) {
 		std::cerr << "Could not complete adding a contact" << std::endl;
 		exit(EXIT_FAILURE);
 	}
-	std::cout << prompt;
+	std::cout << "\x1B[1m" << prompt << RST;
 	std::getline(std::cin, out);
 	if (out.empty()) {
 		std::cerr << "Input required, please try again." << std::endl;
@@ -34,6 +34,7 @@ bool	PhoneBook::add ( void ) {
 	const char* prompts[] = {"First Name: ", "Last Name: ", "Nickname: ", "Phone Number: ", "Darkest Secret: "};
 	std::string	input;
 
+	std::cout << std::endl;
 	for (int i = 0; i < 5; i++) {
 		while (!getUserInput(prompts[i], input)) {
 			continue;
@@ -46,6 +47,7 @@ bool	PhoneBook::add ( void ) {
 			case 4: contacts[_contactNum].setSecret(input); break; 
 		}
 	}
+	std::cout << std::endl;
 
 	_contactNum++;
 	_totalContacts++;
@@ -56,7 +58,6 @@ unsigned int stringToUnsignedInt(const std::string& str) {
     std::istringstream iss(str);
     unsigned int number;
     if (!(iss >> number)) {
-        std::cerr << "Conversion failed!" << std::endl;
         return -1;
     }
     return number;
@@ -82,14 +83,14 @@ bool PhoneBook::getUserIndex(std::string& input) {
 }
 
 void	PhoneBook::search( void ) {
-	std::cout << BBLU("+----------") << BGRN("---------------------------------+") << std::endl;
-	std::cout << ITAL(BOLD(BBLU("|Indexes   "))) << ITAL(BOLD(BGRN("|FirstName |LastName  |Nickname  |"))) << std::endl;
-	std::cout << BBLU("+----------") << BGRN("+----------+----------+----------+") << std::endl;
+	std::cout << "\n\t" << BBLU("+----------") << BGRN("---------------------------------+") << std::endl;
+	std::cout << "\t" << ITAL(BOLD(BBLU("|Indexes   "))) << ITAL(BOLD(BGRN("|FirstName |LastName  |Nickname  |"))) << std::endl;
+	std::cout << "\t" << BBLU("+----------") << BGRN("+----------+----------+----------+") << std::endl;
 
 	if (_contactNum == 0) {
-		std::cout << "|                                           |" << std::endl;
-		std::cout << "| No one is here... Only you, and space...  |" << std::endl;
-		std::cout << "|                                           |" << std::endl;
+		std::cout << "\t|                                           |" << std::endl;
+		std::cout << "\t| No one is here... Only you, and space...  |" << std::endl;
+		std::cout << "\t|                                           |" << std::endl;
 	}
 
 	for (int i = 0; i < _totalContacts && i < MAX_CONTACTS ; i++) {
@@ -101,7 +102,7 @@ void	PhoneBook::search( void ) {
 		lastName = lastName.size() > 10 ? lastName.substr(0, 9) + '.' : lastName;
 		nickname = nickname.size() > 10 ? nickname.substr(0, 9) + '.' : nickname;
 
-		std::cout << "|" << std::setfill (' ') << std::setw (14);
+		std::cout << "\t|" << std::setfill (' ') << std::setw (14);
 		std::cout << KMAG << "\x1B[1m" << (i + 1) << RST << "|";
 		for (int j = 0; j < 3 ; j++) {
 			std::cout << std::setfill (' ') << std::setw (10);
@@ -112,16 +113,18 @@ void	PhoneBook::search( void ) {
 			}
 		}
 	}
-	std::cout << "+-------------------------------------------+" << std::endl;
+	std::cout << "\t+-------------------------------------------+\n" << std::endl;
 
 	std::string	input;
 	while (!getUserIndex(input)) {
 		continue;
 	}
 	uint16_t index = (stringToUnsignedInt(input) - 1);
-	std::cout << "First name: " << contacts[index].getFirstName() << std::endl;
-	std::cout << "Last name: " << contacts[index].getLastName() << std::endl;
-	std::cout << "Nickname: " << contacts[index].getNickname() << std::endl;
-	std::cout << "Phone Number: " << contacts[index].getPhoneNumber() << std::endl;
-	std::cout << "Darkest Secret: " << contacts[index].getSecret() << std::endl;
+	std::cout << std::endl;
+	std::cout << BOLD("\tFirst name: ") << "\x1B[3m" << contacts[index].getFirstName() << RST << std::endl;
+	std::cout << BOLD("\tLast name: ") << "\x1B[3m" << contacts[index].getLastName() << RST << std::endl;
+	std::cout << BOLD("\tNickname: ") << "\x1B[3m" << contacts[index].getNickname() << RST << std::endl;
+	std::cout << BOLD("\tPhone Number: ") << "\x1B[3m" << contacts[index].getPhoneNumber() << RST << std::endl;
+	std::cout << BOLD("\tDarkest Secret: ") << "\x1B[3m" << contacts[index].getSecret() << RST << std::endl;
+	std::cout << std::endl;
 }
