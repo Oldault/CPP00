@@ -1,6 +1,6 @@
 CXX			:= c++
 CXXFLAGS	:= -Iinclude -Wall -Wextra -Werror
-TARGET		:= main
+TARGET		:= dreamJob
 
 SRC_PATH	:= src
 OBJ_PATH	:= obj
