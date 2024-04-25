@@ -25,6 +25,9 @@ class	PhoneBook {
 
 		bool getUserInput(const std::string& prompt, std::string& out);
 		bool getUserIndex(std::string& input);
+		void printHeader( void ) const;
+		void printContact(const Contact& contact, int index) const;
+		void handleUserInput( void );
 };
 
 #endif

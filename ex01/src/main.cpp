@@ -34,7 +34,7 @@ int main( void ) {
 		if (std::cin.eof()) {
 			break ;
 		}
-		std::cout << "[📞] > ";
+		std::cout << FYEL("[📞] > ");
 		std::getline(std::cin, input);
 		if (input == "ADD") {
 			phoneBook.add();
@@ -43,11 +43,11 @@ int main( void ) {
 			phoneBook.search();
 		}
 		else if (input == "EXIT") {
-			std::cout << "Exiting Program" << std::endl;
+			std::cout << ITAL(BOLD("\n\t* Thank you for using our Phonebook! *\n\n"));
 			break ;
 		}
 		else {
-			std::cout << "Invalid Input. Please call: ADD, SEARCH or EXIT" << std::endl;
+			std::cerr << ITAL(BRED("Invalid Input. Please call: ADD, SEARCH or EXIT")) << std::endl;
 		}
 	}
 	return 0;
