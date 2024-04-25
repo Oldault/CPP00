@@ -3,6 +3,7 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <cstdlib>
 
 PhoneBook::PhoneBook( void ) :  _totalContacts(0), _contactNum(0) {
 	return ;
@@ -14,13 +15,13 @@ PhoneBook::~PhoneBook ( void ) {
 
 bool PhoneBook::getUserInput(const std::string& prompt, std::string& out) {
 	if (std::cin.eof()) {
-		std::cerr << ITAL(BRED("Could not complete adding a contact")) << std::endl;
+		std::cerr << ITAL(BRED(" Could not complete adding a contact ")) << "\n\n";
 		exit(EXIT_FAILURE);
 	}
-	std::cout << "\x1B[1m" << KMAG << prompt << RST << "\t";
+	std::cout << "\x1B[1m" << KYEL << prompt << RST << "\t";
 	std::getline(std::cin, out);
 	if (out.empty()) {
-		std::cerr << ITAL(BRED("Input required, please try again.")) << std::endl;
+		std::cerr << ITAL(BRED(" Input required, please try again. ")) << "\n\n";
 		return false;
 	}
 	return true;
@@ -31,7 +32,7 @@ bool	PhoneBook::add ( void ) {
 		_contactNum = 0;
 	}
 
-	const char* prompts[] = {"First Name: ", "Last Name: ", "Nickname: ", "Phone Number: ", "Darkest Secret:"};
+	const char* prompts[] = {"First Name >", "Last Name >", "Nickname >", "Phone Number >", "Dark Secret >"};
 	std::string	input;
 
 	std::cout << std::endl;
@@ -66,22 +67,22 @@ unsigned int stringToUnsignedInt(const std::string& str) {
 
 bool PhoneBook::getUserIndex(std::string& input) {
 	if (std::cin.eof()) {
-		std::cerr << "Could not complete fetching contact" << std::endl;
+		std::cerr << BOLD(FMAG(" Could not complete fetching contact ")) << "\n\n";
 		exit(EXIT_FAILURE);
 	}
-	std::cout << BOLD(FMAG("Index of the entry to display (Example; 1, 2 or 3).\nWrite ")) << ITAL(FRED("LEAVE")) << BOLD(FMAG(" to exit search.")) << std::endl;
+	std::cout << BOLD(FMAG("Index of the entry to display (Example; 1, 2, 3 etc...)\nWrite ")) << ITAL(FRED("LEAVE")) << BOLD(FMAG(" to exit search.")) << std::endl;
 	std::cout << FYEL("\tIndex > ");
 	std::getline(std::cin, input);
 	if (input.empty()) {
-		std::cerr << ITAL(BRED("Input required, please try again.")) << std::endl;
+		std::cerr << ITAL(BRED(" Input required, please try again. ")) << "\n\n";
 		return false;
 	}
 	if (input == "LEAVE") {
 		return true;
 	}
-	uint16_t result = stringToUnsignedInt(input);
+	int result = stringToUnsignedInt(input);
 	if (result < 1 || result > _totalContacts) {
-		std::cerr << ITAL(BRED("No contact at such index. Please try again")) << std::endl;
+		std::cerr << ITAL(BRED(" No contact at such index. Please try again" )) << "\n\n";
 		return false;
 	}
 	return true;
@@ -100,7 +101,7 @@ void	PhoneBook::printHeader ( void ) const {
 }
 
 std::string formatName(const std::string& name) {
-	uint16_t MaxNameLength = 10;
+	unsigned int MaxNameLength = 10;
     return name.size() > MaxNameLength ? name.substr(0, MaxNameLength - 1) + '.' : name;
 }
 
@@ -123,7 +124,7 @@ void	PhoneBook::handleUserInput( void ) {
 		std::cout << std::endl;
 		return ;
 	}
-	uint16_t index = (stringToUnsignedInt(input) - 1);
+	int index = (stringToUnsignedInt(input) - 1);
 	std::cout << std::endl;
 	std::cout << BOLD("\tFirst name: ") << "\x1B[3m" << contacts[index].getFirstName() << RST << std::endl;
 	std::cout << BOLD("\tLast name: ") << "\x1B[3m" << contacts[index].getLastName() << RST << std::endl;
@@ -138,5 +139,6 @@ void	PhoneBook::search( void ) {
 		printContact(contacts[i], i);
 	}
 	std::cout << "\t+-------------------------------------------+\n\n";
+	if (_contactNum == 0) return ;
 	handleUserInput();
 }

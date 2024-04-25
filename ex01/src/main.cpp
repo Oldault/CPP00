@@ -28,7 +28,7 @@ int main( void ) {
 	PhoneBook phoneBook;
 	std::string input;
 
-	uint16_t i = 0;
+	unsigned int i = 0;
 	printArt();
 	while (true && i++ < MAX_ITER) {
 		if (std::cin.eof()) {
@@ -47,7 +47,7 @@ int main( void ) {
 			break ;
 		}
 		else {
-			std::cerr << ITAL(BRED("Invalid Input. Please call: ADD, SEARCH or EXIT")) << std::endl;
+			std::cerr << ITAL(BRED(" Invalid Input. Please call: ADD, SEARCH or EXIT ")) << "\n\n";
 		}
 	}
 	return 0;

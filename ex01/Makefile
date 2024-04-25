@@ -1,5 +1,5 @@
 CXX			:= c++
-CXXFLAGS	:= -Iinclude -Wall -Wextra -Werror
+CXXFLAGS	:= -Iinclude -Wall -Wextra -Werror -std=c++98
 TARGET		:= phonebook
 
 SRC_PATH	:= src
